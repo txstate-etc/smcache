@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tweetid: MyString
+  tweettime: 2015-09-18 15:32:52
+  text: MyText
+  screen_name: MyString
+  display_name: MyText
+  profile_image: MyText
+  favorite: false
+
+two:
+  tweetid: MyString
+  tweettime: 2015-09-18 15:32:52
+  text: MyText
+  screen_name: MyString
+  display_name: MyText
+  profile_image: MyText
+  favorite: false

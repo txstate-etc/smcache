@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  postid: MyString
+  posttime: 2015-09-17 18:12:40
+  caption: MyText
+  url: MyText
+  width: 1
+  height: 1
+
+two:
+  postid: MyString
+  posttime: 2015-09-17 18:12:40
+  caption: MyText
+  url: MyText
+  width: 1
+  height: 1

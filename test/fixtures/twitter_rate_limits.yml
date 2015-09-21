@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  endpoint: MyString
+  limit: 1
+  remaining: 1
+  reset_at: 2015-09-21 00:34:05
+  reset_in: 1
+
+two:
+  endpoint: MyString
+  limit: 1
+  remaining: 1
+  reset_at: 2015-09-21 00:34:05
+  reset_in: 1
