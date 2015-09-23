@@ -1,4 +1,5 @@
 namespace :recurring do
+  desc 'Queue up recurring social media fetchers'
   task init: :environment do
     InstagramJob.enqueue_now
     TwitterJob.enqueue_now

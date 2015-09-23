@@ -29,20 +29,21 @@ class InstagramPost < ActiveRecord::Base
 
     logger.debug("Instagram returned #{results.try(:length)} results")
 
-    images = added = changed = unchanged = 0
+    added = changed = unchanged = 0
     results.each_with_index do |r, idx|
       posttime = Time.at(r.created_time.to_i)
       logger.debug("Instagram result #{idx}: #{r.type}, id: #{r.id}, time: #{posttime}")
-      next unless r.type == "image"
-      images += 1
 
       i = InstagramPost.find_or_initialize_by(postid: r.id)
       i.posttime = posttime
       i.caption = r.caption.try(:text)
-      i.url = r.images.standard_resolution.url
-      i.width = r.images.standard_resolution.width
-      i.height = r.images.standard_resolution.height
+      i.mediatype = r.type
 
+      media = r.type == "video" ? r.videos : r.images 
+      i.url = media.standard_resolution.url
+      i.width = media.standard_resolution.width
+      i.height = media.standard_resolution.height
+        
       if i.new_record?
         log_prefix = "added"
         added += 1
@@ -59,7 +60,7 @@ class InstagramPost < ActiveRecord::Base
       logger.debug("Instagram post #{log_prefix}: #{i}") if log_prefix
     end
 
-    logger.debug("Instagram results: #{added} added, #{changed} updated, #{unchanged} unchanged, #{results.length - images} ignored non-images")
+    logger.debug("Instagram results: #{added} added, #{changed} updated, #{unchanged} unchanged")
 
   end
 end

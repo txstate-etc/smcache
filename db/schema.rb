@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921053405) do
+ActiveRecord::Schema.define(version: 20150923054331) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150921053405) do
     t.integer  "height",     limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "mediatype",  limit: 255
   end
 
   add_index "instagram_posts", ["postid"], name: "index_instagram_posts_on_postid", unique: true, using: :btree
