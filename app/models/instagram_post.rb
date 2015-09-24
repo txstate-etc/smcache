@@ -15,17 +15,13 @@ class InstagramPost < ActiveRecord::Base
   COUNT = 20
 
   def self.min_id
-    InstagramPost.order('posttime DESC').limit(1).pluck(:postid)
+    @min_id ||= InstagramPost.order('posttime DESC').limit(1).pluck(:postid).first
   end
 
   def self.fetch!
-    opts = { access_token: Rails.application.secrets.instagram_key, count: COUNT }
-    min_id = InstagramPost.min_id
-    opts[:min_id] = min_id.first if min_id.present?
-
     logger.debug("Fetching last #{COUNT} Instagram posts newer than #{min_id}")
 
-    results = Instagram.user_recent_media TXST_ID, opts
+    results = client.user_recent_media TXST_ID, min_id: min_id, count: COUNT
 
     logger.debug("Instagram returned #{results.try(:length)} results")
 
@@ -62,5 +58,10 @@ class InstagramPost < ActiveRecord::Base
 
     logger.debug("Instagram results: #{added} added, #{changed} updated, #{unchanged} unchanged")
 
+  end
+
+private
+  def self.client
+    @@client ||= Instagram.client(access_token: Rails.application.secrets.instagram_key)
   end
 end
