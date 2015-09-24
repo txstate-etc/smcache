@@ -35,11 +35,16 @@ class InstagramPost < ActiveRecord::Base
       i.caption = r.caption.try(:text)
       i.mediatype = r.type
 
-      media = r.type == "video" ? r.videos : r.images 
-      i.url = media.standard_resolution.url
-      i.width = media.standard_resolution.width
-      i.height = media.standard_resolution.height
-        
+      i.url = r.images.standard_resolution.url
+      i.width = r.images.standard_resolution.width
+      i.height = r.images.standard_resolution.height
+      
+      if r.videos
+        i.video_url = r.videos.standard_resolution.url
+        i.video_width = r.videos.standard_resolution.width
+        i.video_height = r.videos.standard_resolution.height
+      end
+
       if i.new_record?
         log_prefix = "added"
         added += 1
