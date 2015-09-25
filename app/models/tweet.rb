@@ -90,6 +90,28 @@ private
       t.profile_image = r.user.profile_image_url.to_s
       t.favorite = favorite
 
+      #FIXME: do we need to store the permalink?
+
+      # image_url = t.media.first.media_url.to_s (ensure type == 'photo')
+      # image_width = t.media.first.sizes[:medium].w (and height. Is medium correct?) 
+      # for videos, the media_url is the splash screen image
+      #  the actual video url is in video_info.variants:
+      #     :bitrate: 832000
+      #     :content_type: video/mp4
+      #     :url: https://video.twimg.com/ext_tw_video/641648443471978496/pu/vid/640x360/CSshPlgTUiXGvYwt.mp4
+      # There are many of these. Filter for video/mp4 and the median bitrate.
+      
+      if r.media?
+        m = r.media.first
+        t.image_url = m.media_url.to_s
+        t.image_width = m.sizes[:medium].w
+        t.image_height = m.sizes[:medium].h
+        
+        if m.is_a?(Twitter::Media::Video)
+          t.video_url = best_video(m.video_info.variants)
+        end
+      end
+
       if t.new_record?
         log_prefix = "added"
         added += 1
@@ -109,6 +131,13 @@ private
 
     logger.debug("#{type} results: #{added} added, #{changed} updated, #{unchanged} unchanged")
     return total
+  end
+
+  def self.best_video(variants)
+    # currently just returning the 'medium' bitrate since that matches the splash screen
+    mp4s = variants.select { |v| v.content_type == 'video/mp4' }.sort_by(&:bitrate)
+    medium = mp4s.at(mp4s.length/2)
+    medium.url if medium
   end
 
   def self.client

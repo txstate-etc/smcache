@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924000000) do
+ActiveRecord::Schema.define(version: 20150925000000) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -57,6 +57,10 @@ ActiveRecord::Schema.define(version: 20150924000000) do
     t.boolean  "favorite"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.text     "image_url",     limit: 65535
+    t.integer  "image_width",   limit: 4
+    t.integer  "image_height",  limit: 4
+    t.text     "video_url",     limit: 65535
   end
 
   add_index "tweets", ["tweetid"], name: "index_tweets_on_tweetid", unique: true, using: :btree
