@@ -1,9 +1,9 @@
 .smbox {
-  min-height: 400px;
-  width: 400px;
+  min-height: 200px;
+  /*max-width: 400px;*/
   background: #005481;
   margin: 12px auto;
-  padding: 2px 36px;
+  padding: 2px 26px 26px;
   border-radius: 4px;
 }
 
@@ -11,45 +11,83 @@
   color: white;
 }
 
-#instagram img {
-  width: 100%;
-}
-
-#twitter .smcontainer {
+.instagram .smcontainer {
   background-color: white;
-  padding: 1.5em;
+  padding: 0.6em;
   border-radius: 4px;
 }
 
-#twitter .smcontainer a {
+.instagram .ig-header img {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5em;
+}
+
+.instagram .ig-header .posttime {
+  color: #c9c8cd;
+  font-size: 0.875em;
+}
+
+.posttime a {
   text-decoration: none;
 }
 
-#twitter .tweet-header {
+.posttime::before {
+  content: '\2022';
+  margin: 0 4px;
+}
+
+.instagram .ig-body, #instagram .ig-footer {
+  margin-top: 0.5em;
+}
+
+.instagram .ig-body img {
+  width: 100%;
+}
+
+.twitter .smcontainer {
+  background-color: white;
+  /*padding: 1.5em;*/
+  border-radius: 4px;
+}
+
+.twitter .smcontainer a {
+  text-decoration: none;
+}
+
+.twitter .tweet-wrap {
+  padding: 1.5em;
+}
+
+.twitter .tweet-image-wrap img {
+  width: 100%;
+}
+
+.twitter .tweet-header {
   margin-bottom: 0.5em;
 }
 
-#twitter .tweet-header a:not(:focus):not(:hover):not(:active) {
+.twitter .tweet-header a:not(:focus):not(:hover):not(:active) {
   color: #1C2022;
 }
 
-#twitter .tweet-header .display-name {
+.twitter .tweet-header .display-name {
   font-weight: bold;
   display: block;
 }
 
-#twitter .tweet-header img {
+.twitter .tweet-header img {
   width: 36px;
   height: 36px;
   margin-right: 1em;
   float: left;
 }
 
-#twitter .tweet-footer a:not(:focus):not(:hover):not(:active) {
+.twitter .tweet-footer a:not(:focus):not(:hover):not(:active) {
   color: #697882;
 }
 
-#twitter .tweet-footer, #twitter .screen-name {
+.twitter .tweet-footer, #twitter .screen-name {
   font-size: 0.875em;
   color: #697882;
   display: block;
