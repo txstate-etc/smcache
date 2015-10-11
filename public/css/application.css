@@ -1,0 +1,56 @@
+.smbox {
+  min-height: 400px;
+  width: 400px;
+  background: #005481;
+  margin: 12px auto;
+  padding: 2px 36px;
+  border-radius: 4px;
+}
+
+.smbox h2 {
+  color: white;
+}
+
+#instagram img {
+  width: 100%;
+}
+
+#twitter .smcontainer {
+  background-color: white;
+  padding: 1.5em;
+  border-radius: 4px;
+}
+
+#twitter .smcontainer a {
+  text-decoration: none;
+}
+
+#twitter .tweet-header {
+  margin-bottom: 0.5em;
+}
+
+#twitter .tweet-header a:not(:focus):not(:hover):not(:active) {
+  color: #1C2022;
+}
+
+#twitter .tweet-header .display-name {
+  font-weight: bold;
+  display: block;
+}
+
+#twitter .tweet-header img {
+  width: 36px;
+  height: 36px;
+  margin-right: 1em;
+  float: left;
+}
+
+#twitter .tweet-footer a:not(:focus):not(:hover):not(:active) {
+  color: #697882;
+}
+
+#twitter .tweet-footer, #twitter .screen-name {
+  font-size: 0.875em;
+  color: #697882;
+  display: block;
+}
