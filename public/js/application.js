@@ -1,5 +1,5 @@
 function populateInsta(el, item) {
-  $(el).html(fmtOneInsta(item));
+  $(el).append(fmtOneInsta(item));
   if (item.video_url) {
     videojs("video-"+item.postid);
   }
@@ -43,7 +43,6 @@ function fmtInstaVideo(item) {
     '<div class="insta-video-wrap">' +
       '<video id="video-'+ item.postid +'" class="video-js vjs-default-skin ' +
         'vjs-fluid vjs-big-play-centered" controls preload="auto" ' +
-        'width="auto" height="auto"' +
         'poster="'+ item.url +'">' +
         '<source src="'+ item.video_url +'" type="video/mp4" />' +
         '<p class="vjs-no-js">' +
@@ -77,7 +76,7 @@ function linkifyInsta(text) {
 }
 
 function populateTweet(el, item) {
-  $(el).html(fmtOneTweet(item));
+  $(el).append(fmtOneTweet(item));
   if (item.video_url) {
     videojs("video-"+item.tweetid);
   }
@@ -85,23 +84,25 @@ function populateTweet(el, item) {
 
 function fmtOneTweet(item) {
   return '' +
-    fmtTweetVideo(item) +
-    fmtTweetImage(item) +
-    '<div class="tweet-wrap">' +
-      '<div class="tweet-header">' +
-        '<a href="//twitter.com/' + item.screen_name + '">' +
-          '<img src="'+ item.profile_image +'"/>' +
-          '<span class="display-name">' + item.display_name + '</span>' +
-          '<span class="screen-name">@' + item.screen_name + '</span>' +
-        '</a>' +
-      '</div>' +
-      '<div class="tweet-body">' +
-        '<p>' + linkifyTweet(item.text) + '</p>' +
-      '</div>' +
-      '<div class="tweet-footer">' +
-        '<a href="//twitter.com/'+ item.screen_name +'/status/'+ item.tweetid +'">' + 
-          fmtTweetTime(item.tweettime) + 
-        '</a>' +
+    '<div class="tweet-container">' +
+      fmtTweetVideo(item) +
+      fmtTweetImage(item) +
+      '<div class="tweet-wrap">' +
+        '<div class="tweet-header">' +
+          '<a href="//twitter.com/' + item.screen_name + '">' +
+            '<img src="'+ item.profile_image +'"/>' +
+            '<span class="display-name">' + item.display_name + '</span>' +
+            '<span class="screen-name">@' + item.screen_name + '</span>' +
+          '</a>' +
+        '</div>' +
+        '<div class="tweet-body">' +
+          '<p>' + linkifyTweet(item.text) + '</p>' +
+        '</div>' +
+        '<div class="tweet-footer">' +
+          '<a href="//twitter.com/'+ item.screen_name +'/status/'+ item.tweetid +'">' + 
+            fmtTweetTime(item.tweettime) + 
+          '</a>' +
+        '</div>' +
       '</div>' +
     '</div>' 
   ;
@@ -129,7 +130,6 @@ function fmtTweetVideo(item) {
     '<div class="tweet-video-wrap">' +
       '<video id="video-'+ item.tweetid +'" class="video-js vjs-default-skin ' +
         'vjs-fluid vjs-big-play-centered" controls preload="auto" ' +
-        'width="auto" height="auto"' +
         'poster="'+ item.image_url +'">' +
         '<source src="'+ item.video_url +'" type="video/mp4" />' +
         '<p class="vjs-no-js">' +

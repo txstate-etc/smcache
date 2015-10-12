@@ -1,13 +1,29 @@
 var tweets = [];
 var instas = [];
 
+var slick_opts = {
+  speed: 500,
+  fade: true,
+  cssEase: 'linear',
+  // autoplay: true,
+  autoplaySpeed: 4000,
+  // adaptiveHeight: true,
+};
+
 function updateInstas() {
   if (instas.length == 0) {
     return;
   }
 
-  // TODO: rotate
-  $('.instagram .smcontainer').html(fmtOneInsta(instas[0]));
+  var $container = $('.instagram .smcontainer');
+
+  $container.empty();
+
+  instas.forEach(function(item){
+    populateInsta($container, item);
+  });
+
+  $container.slick(slick_opts);
 }
 
 function updateTweets() {
@@ -15,8 +31,15 @@ function updateTweets() {
     return;
   }
 
-  // TODO: rotate
-  $('.twitter .smcontainer').html(fmtOneTweet(tweets[0]));
+  var $container = $('.twitter .smcontainer');
+
+  $container.empty();
+
+  tweets.forEach(function(item){
+    populateTweet($container, item);
+  });
+
+  $container.slick(slick_opts);
 }
 
 $(function() {

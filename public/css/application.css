@@ -1,9 +1,13 @@
+.col-xs-12.col-md-6 {
+    padding: 0 2px;
+}
+
 .smbox {
   min-height: 200px;
   /*max-width: 400px;*/
   background: #005481;
   margin: 12px auto;
-  padding: 2px 26px 26px;
+  padding: 1px 32px 32px;
   border-radius: 4px;
 }
 
@@ -13,11 +17,12 @@
 
 .instagram .smcontainer {
   background-color: white;
-  padding: 0.6em;
+  padding: 0.5em;
   border-radius: 4px;
 }
 
 .instagram .ig-header img {
+  display: inline !important;
   width: 32px;
   height: 32px;
   margin-right: 0.5em;
@@ -37,7 +42,7 @@
   margin: 0 4px;
 }
 
-.instagram .ig-body, #instagram .ig-footer {
+.instagram .ig-body, .instagram .ig-footer {
   margin-top: 0.5em;
 }
 
@@ -49,6 +54,7 @@
   background-color: white;
   /*padding: 1.5em;*/
   border-radius: 4px;
+  font-size: 16px;
 }
 
 .twitter .smcontainer a {
@@ -56,7 +62,7 @@
 }
 
 .twitter .tweet-wrap {
-  padding: 1.5em;
+  padding: 1.25em;
 }
 
 .twitter .tweet-image-wrap img {
@@ -87,7 +93,7 @@
   color: #697882;
 }
 
-.twitter .tweet-footer, #twitter .screen-name {
+.twitter .tweet-footer, .twitter .screen-name {
   font-size: 0.875em;
   color: #697882;
   display: block;
