@@ -67,6 +67,6 @@ class InstagramPost < ActiveRecord::Base
 
 private
   def self.client
-    @@client ||= Instagram.client(access_token: Rails.application.secrets.instagram_key)
+    @@client ||= Instagram.client(client_id: Rails.application.secrets.instagram_client_id)
   end
 end
