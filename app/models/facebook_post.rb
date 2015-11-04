@@ -31,12 +31,13 @@ class FacebookPost < ActiveRecord::Base
 
       i = FacebookPost.find_or_initialize_by(postid: r['id'])
       i.posttime = posttime
+      i.link = r['link']
       i.caption = r['message'] || r['description'] || r['name']
       i.mediatype = r['type']
 
-      i.url = r['full_picture']
-      # i.width = r.images.standard_resolution.width
-      # i.height = r.images.standard_resolution.height
+      i.image_url = r['full_picture']
+      # i.image_width = r.images.standard_resolution.width
+      # i.image_height = r.images.standard_resolution.height
       
       if r['type'] == 'video'
         i.video_url = r['source']

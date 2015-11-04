@@ -1,5 +1,6 @@
 var tweets = [];
 var instas = [];
+var fbooks = [];
 
 var slick_opts = {
   speed: 500,
@@ -19,11 +20,31 @@ function updateInstas() {
 
   $container.empty();
 
-  instas.forEach(function(item){
-    populateInsta($container, item);
-  });
+  // instas.forEach(function(item){
+  //   populateInsta($container, item);
+  // });
+  
+  populateInsta($container, instas[0]);
 
-  $container.slick(slick_opts);
+  // $container.slick(slick_opts);
+}
+
+function updateFbooks() {
+  if (fbooks.length == 0) {
+    return;
+  }
+
+  var $container = $('.facebook .smcontainer');
+
+  $container.empty();
+
+  // fbooks.forEach(function(item){
+  //   populateFbook($container, item);
+  // });
+
+  populateFbook($container, fbooks[0]);
+
+  // $container.slick(slick_opts);
 }
 
 function updateTweets() {
@@ -35,11 +56,13 @@ function updateTweets() {
 
   $container.empty();
 
-  tweets.forEach(function(item){
-    populateTweet($container, item);
-  });
+  // tweets.forEach(function(item){
+  //   populateTweet($container, item);
+  // });
 
-  $container.slick(slick_opts);
+  populateTweet($container, tweets[0]);
+
+  // $container.slick(slick_opts);
 }
 
 $(function() {
@@ -54,4 +77,8 @@ $(function() {
     updateInstas();
   });
 
+  $.ajax("/facebook").done(function(data) {
+    fbooks = data;
+    updateFbooks();
+  });
 });

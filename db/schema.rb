@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102000000) do
+ActiveRecord::Schema.define(version: 20151104000002) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -33,15 +33,16 @@ ActiveRecord::Schema.define(version: 20151102000000) do
     t.string   "postid",       limit: 255,   null: false
     t.datetime "posttime",                   null: false
     t.binary   "caption",      limit: 65535
-    t.text     "url",          limit: 65535
-    t.integer  "width",        limit: 4
-    t.integer  "height",       limit: 4
+    t.text     "image_url",    limit: 65535
+    t.integer  "image_width",  limit: 4
+    t.integer  "image_height", limit: 4
     t.string   "mediatype",    limit: 255
     t.text     "video_url",    limit: 65535
     t.integer  "video_width",  limit: 4
     t.integer  "video_height", limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.text     "link",         limit: 65535
   end
 
   add_index "facebook_posts", ["postid"], name: "index_facebook_posts_on_postid", unique: true, using: :btree
@@ -51,15 +52,16 @@ ActiveRecord::Schema.define(version: 20151102000000) do
     t.string   "postid",       limit: 255,   null: false
     t.datetime "posttime",                   null: false
     t.binary   "caption",      limit: 65535
-    t.text     "url",          limit: 65535
-    t.integer  "width",        limit: 4
-    t.integer  "height",       limit: 4
+    t.text     "image_url",    limit: 65535
+    t.integer  "image_width",  limit: 4
+    t.integer  "image_height", limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "mediatype",    limit: 255
     t.text     "video_url",    limit: 65535
     t.integer  "video_width",  limit: 4
     t.integer  "video_height", limit: 4
+    t.text     "link",         limit: 65535
   end
 
   add_index "instagram_posts", ["postid"], name: "index_instagram_posts_on_postid", unique: true, using: :btree
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 20151102000000) do
     t.integer  "image_width",   limit: 4
     t.integer  "image_height",  limit: 4
     t.text     "video_url",     limit: 65535
+    t.text     "link",          limit: 65535
   end
 
   add_index "tweets", ["tweetid"], name: "index_tweets_on_tweetid", unique: true, using: :btree

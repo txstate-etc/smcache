@@ -88,18 +88,8 @@ private
       t.screen_name = r.user.screen_name
       t.display_name = r.user.name
       t.profile_image = r.user.profile_image_url.to_s
+      t.link = "//twitter.com/#{t.screen_name}/status/#{t.tweetid}"
       t.favorite = favorite
-
-      #FIXME: do we need to store the permalink?
-
-      # image_url = t.media.first.media_url.to_s (ensure type == 'photo')
-      # image_width = t.media.first.sizes[:medium].w (and height. Is medium correct?) 
-      # for videos, the media_url is the splash screen image
-      #  the actual video url is in video_info.variants:
-      #     :bitrate: 832000
-      #     :content_type: video/mp4
-      #     :url: https://video.twimg.com/ext_tw_video/641648443471978496/pu/vid/640x360/CSshPlgTUiXGvYwt.mp4
-      # There are many of these. Filter for video/mp4 and the median bitrate.
       
       if r.media?
         m = r.media.first
@@ -134,7 +124,11 @@ private
   end
 
   def self.best_video(variants)
-    # currently just returning the 'medium' bitrate since that matches the splash screen
+    #  the video url is in video_info.variants. Ex:
+    #     :bitrate: 832000
+    #     :content_type: video/mp4
+    #     :url: https://video.twimg.com/ext_tw_video/641648443471978496/pu/vid/640x360/CSshPlgTUiXGvYwt.mp4
+    # There are many of these. Filter for video/mp4 and the median bitrate since that matches the splash screen.
     mp4s = variants.select { |v| v.content_type == 'video/mp4' }.sort_by(&:bitrate)
     medium = mp4s.at(mp4s.length/2)
     medium.url if medium

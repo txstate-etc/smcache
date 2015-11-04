@@ -1,10 +1,46 @@
-.col-xs-12.col-md-6 {
-    padding: 0 2px;
+html, body, button, input, select, textarea {
+    font-family: 'Univers W01', Helvetica, Calibri, Arial, sans-serif;
 }
 
-.smbox {
+html {font-size: 62.5%; position: relative; min-height: 100%;}
+body {font-size: 100%; height: auto; min-height: 100%; font-weight: 100; text-rendering: optimizeLegibility; /*background-color: #6a5638;*/ color: #222222; font-size: 1.6rem;}
+::-moz-selection {background: #E8E3DB; text-shadow:none}
+::selection {background: #E8E3DB; text-shadow:none}
+img {max-width: 100%; display: block;}
+figure {margin: 0; background: #e8e3db;}
+figcaption {padding: 2.2rem 2rem;}
+figcaption p {margin: 0;}
+h2 {font-size: 2.8rem; margin-bottom: 4rem; margin-top: 0.1rem; font-weight: 400;}
+h2 a {padding: 0; margin: 0; color: #222222; text-decoration: none; padding-bottom: 2.8rem;}
+h2 a:hover {background: transparent;}
+.layout {overflow: hidden;}
+*, *:before, *:after {-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+.reverse-float {float: right;}
+.clearfix:before, .clearfix:after {content: " "; display: table;}
+.clearfix:after {clear: both;}
+.clearfix {*zoom: 1;}
+.layout {background-color: #FFFFFF;}
+.image-link {padding: 0; margin: 0; display: inline-block;}
+.image-link-2 {display: block; padding: 0; margin: 0; -webkit-transition: opacity 0.8s ease; -moz-transition: opacity 0.8s ease; -o-transition: opacity 0.8s ease; transition: opacity 0.8s ease;}
+.image-link:hover {background: transparent;}
+.image-link-2:hover {background: transparent; opacity: .85;}
+a {-webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 3px 5px; margin: -3px -5px; color: #005481; text-decoration: underline;}
+/*a:hover {background: #E8E3DB;}*/
+.constrain {max-width: 1200px; margin: auto;}
+.hover-fx-1 {-webkit-transition: all 0.2s cubic-bezier(0, 0.5, 0.25, 1); -moz-transition: all 0.2s cubic-bezier(0, 0.5, 0.25, 1); -o-transition: all 0.2s cubic-bezier(0, 0.5, 0.25, 1); transition: all 0.2s cubic-bezier(0, 0.5, 0.25, 1);}
+.hover-fx-2 i {position: relative;}
+.hover-fx-2:hover i {animation: chevron 1.2s ease-in-out infinite alternate;}
+@keyframes chevron { from {right: 0;} to {right: .5rem;} }
+.hover-fx-3 {-webkit-transition: all 0.8s ease; -moz-transition: all 0.8s ease; -o-transition: all 0.8s ease; transition: all 0.8s ease;}
+.hover-fx-4 {-webkit-transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1); -moz-transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1); -o-transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1); transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1);}
+.hover-fx-5 {-webkit-transition: all 0.3s ease; -moz-transition: all 0.3s ease; -o-transition: all 0.3s ease; transition: all 0.3s ease;}
+
+/*.col-xs-12.col-md-6 {
+    padding: 0 2px;
+}
+*/
+/*.smbox {
   min-height: 200px;
-  /*max-width: 400px;*/
   background: #005481;
   margin: 12px auto;
   padding: 1px 32px 32px;
@@ -32,18 +68,93 @@
   color: #c9c8cd;
   font-size: 0.875em;
 }
+*/
 
 .posttime a {
   text-decoration: none;
 }
 
-.posttime::before {
+/*.posttime::before {
   content: '\2022';
   margin: 0 4px;
+}*/
+
+/*.instagram .ig-body, .instagram .ig-footer {
+  margin-top: 0.5em;
+}
+*/
+
+.ig-body {
+  min-height: 35rem;
 }
 
-.instagram .ig-body, .instagram .ig-footer {
-  margin-top: 0.5em;
+.ig-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.ig-image .image a {
+  display: block;
+  transition: opacity 0.8s ease;
+}
+
+.ig-image .image a:hover {
+  opacity: 0.85;
+}
+
+.ig-image .caption {
+  position: absolute;
+  opacity: 0; 
+  bottom: -30%;
+  color: white;
+  background: rgba(106,86,56,0.9);
+  padding: 1rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.ig-image .caption p {
+  font-size: 1.2rem;
+}
+
+.ig-image .caption a {
+  color: inherit;
+}
+
+.ig-image:hover .caption {
+  opacity: 1;
+  bottom: 0;
+}
+
+.ig-footer {
+  position: relative;
+  border-bottom: 3px solid #6a5638;
+}
+
+.ig-footer p {
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+
+.ig-footer .posttime {
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    color: #767676;
+    font-weight: 400;
+}
+
+.ig-footer .social-area-icon {
+    position: absolute;
+    right: 0;
+    font-size: 2.6rem;
+    color: #6a5638;
+    bottom: -0.1rem;
+}
+.ig-footer .social-area-icon a {
+  color: inherit;
+}
+
+.ig-footer .social-area-icon a:hover {
+    color: #3f729b;
 }
 
 .instagram .ig-body img {
@@ -97,4 +208,14 @@
   font-size: 0.875em;
   color: #697882;
   display: block;
+}
+
+@media (max-width: 48em) {
+  .ig-body {
+    min-height: 0;
+  }
+
+  .ig-footer {
+    border-bottom: none;
+  }
 }

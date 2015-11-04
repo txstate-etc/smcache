@@ -32,12 +32,13 @@ class InstagramPost < ActiveRecord::Base
 
       i = InstagramPost.find_or_initialize_by(postid: r.id)
       i.posttime = posttime
+      i.link = r.link
       i.caption = r.caption.try(:text)
       i.mediatype = r.type
 
-      i.url = r.images.standard_resolution.url
-      i.width = r.images.standard_resolution.width
-      i.height = r.images.standard_resolution.height
+      i.image_url = r.images.standard_resolution.url
+      i.image_width = r.images.standard_resolution.width
+      i.image_height = r.images.standard_resolution.height
       
       if r.videos
         i.video_url = r.videos.standard_resolution.url
