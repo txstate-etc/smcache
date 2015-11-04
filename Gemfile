@@ -16,6 +16,7 @@ gem 'delayed_job_active_record'
 
 gem 'instagram'
 gem 'twitter'
+gem 'koala' # facebook  
 
 # sends you an email when an exception occurs
 gem 'exception_notification'
