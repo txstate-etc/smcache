@@ -7,19 +7,22 @@ function populateFbook(el, item) {
 
 function fmtOneFbook(item) {
   return '' +
-    '<div class="fbook-wrap">' +
-      '<div class="fb-header">' +
-        '<a href="//facebook.com/' + 'txstateu' + '">' +
-          '<span class="screen-name">' + 'txstateu' + '</span>' +
-        '</a>' +
-        '<span class="posttime">' + fmtFbookTime(item.posttime) + '</span>' +
+    '<div class="sm-wrap">' +
+      '<div class="sm-body">' +
+        '<div class="image">' +
+          fmtFbookVideo(item) +
+          fmtFbookImage(item) +
+        '</div>' +
+        '<div class="caption">' +
+          '<p>' + ellipsize(item.caption, 150) + '</p>' +
+          '<p class="link">(<a href="' + item.link + '">via Facebook</a>)</p>' +
+        '</div>' +
       '</div>' +
-      '<div class="fb-body">' +
-        fmtFbookVideo(item) +
-        fmtFbookImage(item) +
-      '</div>' +
-      '<div class="fb-footer">' +
-        '<p>' + item.caption + '</p>' +
+      '<div class="sm-footer">' +
+        '<p>' + 
+          '<span title="Time posted: '+fmtFbookTimeTitle(item.posttime)+'" class="posttime">' + fmtFbookTime(item.posttime) + '</span>' +
+          '<span class="social-area-icon"><a href="//www.facebook.com/TXSTATEU/"><i class="fa fa-facebook-official"></i></a></span>' +
+        '</p>' + 
       '</div>' +
     '</div>'
   ;
@@ -56,7 +59,12 @@ function fmtFbookVideo(item) {
 }
 
 function fmtFbookTime(time) {
-  return moment(time).fromNow(true);
+  return moment(time).fromNow();
+}
+
+function fmtFbookTimeTitle(time) {
+  //24 Sep 2015, 23:31:27 (UTC)
+  return moment(time).format('D MMM YYYY, HH:mm:ss (Z)')
 }
 
 function populateInsta(el, item) {
@@ -68,22 +76,22 @@ function populateInsta(el, item) {
 
 function fmtOneInsta(item) {
   return '' +
-    '<div class="insta-wrap">' +
-      '<div class="ig-body">' +
+    '<div class="sm-wrap">' +
+      '<div class="sm-body">' +
         '<div class="ig-image">' +
           '<div class="image">' +
             fmtInstaVideo(item) +
             fmtInstaImage(item) +
           '</div>' +
           '<div class="caption">' +
-            '<p >' + linkifyInsta(item.caption) + '</p>' +
+            '<p >' + linkifyInsta(ellipsize(item.caption, 150)) + '</p>' +
             '<p class="link">(<a href="' + item.link + '">via Instagram</a>)</p>' +
           '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="ig-footer">' +
+      '<div class="sm-footer">' +
         '<p>' + 
-          '<span class="posttime">' + fmtInstaTime(item.posttime) + '</span>' +
+          '<span title="Time posted: '+fmtInstaTimeTitle(item.posttime)+'" class="posttime">' + fmtInstaTime(item.posttime) + '</span>' +
           '<span class="social-area-icon"><a href="//instagram.com/txst"><i class="fa fa-instagram"></i></a></span>' +
         '</p>' +
       '</div>' +
@@ -125,6 +133,11 @@ function fmtInstaTime(time) {
   return moment(time).fromNow();
 }
 
+function fmtInstaTimeTitle(time) {
+  //24 Sep 2015, 23:31:27 (UTC)
+  return moment(time).format('D MMM YYYY, HH:mm:ss (Z)')
+}
+
 function linkifyInsta(text) {
   if (!text) {
     return '';
@@ -151,25 +164,27 @@ function populateTweet(el, item) {
 
 function fmtOneTweet(item) {
   return '' +
-    '<div class="tweet-container">' +
+    '<div class="sm-wrap">' +
       fmtTweetVideo(item) +
       fmtTweetImage(item) +
-      '<div class="tweet-wrap">' +
+      '<div class="sm-body">' +
         '<div class="tweet-header">' +
-          '<a href="//twitter.com/' + item.screen_name + '">' +
-            '<img src="'+ item.profile_image +'"/>' +
-            '<span class="display-name">' + item.display_name + '</span>' +
-            '<span class="screen-name">@' + item.screen_name + '</span>' +
+          '<a class="screen-name" href="//twitter.com/' + item.screen_name + '">' +
+            '@' + item.screen_name +
           '</a>' +
+          '<span class="display-name">' + item.display_name + '</span>' +
         '</div>' +
         '<div class="tweet-body">' +
           '<p>' + linkifyTweet(item.text) + '</p>' +
         '</div>' +
-        '<div class="tweet-footer">' +
-          '<a href="'+item.link+'">' + 
+      '</div>' +
+      '<div class="sm-footer">' +
+        '<p>' + 
+          '<a title="Time posted: '+fmtTweetTimeTitle(item.tweettime)+'" class="posttime" href="'+item.link+'">' + 
             fmtTweetTime(item.tweettime) + 
           '</a>' +
-        '</div>' +
+          '<span class="social-area-icon"><a href="//instagram.com/txst"><i class="fa fa-twitter"></i></a></span>' +
+        '</p>' + 
       '</div>' +
     '</div>' 
   ;
@@ -217,6 +232,11 @@ function fmtTweetTime(time) {
   }
 }
 
+function fmtTweetTimeTitle(time) {
+  //24 Sep 2015, 23:31:27 (UTC)
+  return moment(time).format('D MMM YYYY, HH:mm:ss (Z)')
+}
+
 function linkifyTweet(text) {
   // final Pattern linkPattern = Pattern.compile("(https?://\\S+)", Pattern.CASE_INSENSITIVE);
   // final Pattern userPattern = Pattern.compile("(^|)@(\\w+)");
@@ -236,4 +256,19 @@ function linkifyTweet(text) {
   text = text.replace(/(^|)#(\w+)/gi, '<a href="//twitter.com/search?q=%23$2">$&</a>');  
 
   return text;
+}
+
+// truncate string and append ellipsis if length is greater than len.
+// truncates on word boundary if possible. 
+function ellipsize(s, len) {
+  if (s.length <= len) {
+    return s;
+  }
+
+  var wb = s.substr(len-10, 20).lastIndexOf(' ') - 10;
+  if (wb < -10) {
+    wb = 0;
+  }
+
+  return s.substr(0,len + wb) + '&hellip;';
 }

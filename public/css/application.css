@@ -35,56 +35,7 @@ a {-webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 3p
 .hover-fx-4 {-webkit-transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1); -moz-transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1); -o-transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1); transition: background-color 0.2s cubic-bezier(0, 0.5, 0.25, 1);}
 .hover-fx-5 {-webkit-transition: all 0.3s ease; -moz-transition: all 0.3s ease; -o-transition: all 0.3s ease; transition: all 0.3s ease;}
 
-/*.col-xs-12.col-md-6 {
-    padding: 0 2px;
-}
-*/
-/*.smbox {
-  min-height: 200px;
-  background: #005481;
-  margin: 12px auto;
-  padding: 1px 32px 32px;
-  border-radius: 4px;
-}
-
-.smbox h2 {
-  color: white;
-}
-
-.instagram .smcontainer {
-  background-color: white;
-  padding: 0.5em;
-  border-radius: 4px;
-}
-
-.instagram .ig-header img {
-  display: inline !important;
-  width: 32px;
-  height: 32px;
-  margin-right: 0.5em;
-}
-
-.instagram .ig-header .posttime {
-  color: #c9c8cd;
-  font-size: 0.875em;
-}
-*/
-
-.posttime a {
-  text-decoration: none;
-}
-
-/*.posttime::before {
-  content: '\2022';
-  margin: 0 4px;
-}*/
-
-/*.instagram .ig-body, .instagram .ig-footer {
-  margin-top: 0.5em;
-}
-*/
-
-.ig-body {
+.sm-body {
   min-height: 35rem;
 }
 
@@ -125,97 +76,109 @@ a {-webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 3p
   bottom: 0;
 }
 
-.ig-footer {
+.sm-footer {
   position: relative;
   border-bottom: 3px solid #6a5638;
 }
 
-.ig-footer p {
+.sm-footer p {
   margin-top: 2rem;
   margin-bottom: 0;
 }
 
-.ig-footer .posttime {
-    text-transform: uppercase;
-    font-size: 1.1rem;
-    color: #767676;
-    font-weight: 400;
+.sm-footer .posttime {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: #767676;
+  font-weight: 400;
 }
 
-.ig-footer .social-area-icon {
-    position: absolute;
-    right: 0;
-    font-size: 2.6rem;
-    color: #6a5638;
-    bottom: -0.1rem;
+.sm-footer .social-area-icon {
+  position: absolute;
+  right: 0;
+  font-size: 2.6rem;
+  color: #6a5638;
+  bottom: -0.1rem;
 }
-.ig-footer .social-area-icon a {
+
+.sm-footer .social-area-icon a {
   color: inherit;
 }
 
-.ig-footer .social-area-icon a:hover {
-    color: #3f729b;
+.instagram .sm-footer .social-area-icon a:hover {
+  color: #3f729b;
 }
 
-.instagram .ig-body img {
-  width: 100%;
+.twitter .sm-footer .social-area-icon a:hover {
+  color: #55acee;
 }
 
-.twitter .smcontainer {
-  background-color: white;
-  /*padding: 1.5em;*/
-  border-radius: 4px;
-  font-size: 16px;
+.facebook .sm-footer .social-area-icon a:hover {
+  color: #3b5998;
 }
 
-.twitter .smcontainer a {
+.tweet-header .screen-name {
+  display: block;
+  text-align: center;
+  font-size: 3.2rem;
+  font-weight: 700;
   text-decoration: none;
+  margin-top: 0;
 }
 
-.twitter .tweet-wrap {
-  padding: 1.25em;
-}
-
-.twitter .tweet-image-wrap img {
-  width: 100%;
-}
-
-.twitter .tweet-header {
-  margin-bottom: 0.5em;
-}
-
-.twitter .tweet-header a:not(:focus):not(:hover):not(:active) {
-  color: #1C2022;
-}
-
-.twitter .tweet-header .display-name {
-  font-weight: bold;
+.tweet-header .display-name {
+  color: #767676;
+  font-size: 1.1rem;
+  text-transform: uppercase;
   display: block;
+  text-align: center;
 }
 
-.twitter .tweet-header img {
-  width: 36px;
-  height: 36px;
-  margin-right: 1em;
-  float: left;
+.tweet-body p {
+  margin-top: 3rem;
+  font-size: 2rem;
+  line-height: 3.2rem;
+  text-align: center;
+  font-weight: 100;
+  word-spacing: 0px;
+  letter-spacing: normal;
 }
 
-.twitter .tweet-footer a:not(:focus):not(:hover):not(:active) {
-  color: #697882;
-}
-
-.twitter .tweet-footer, .twitter .screen-name {
-  font-size: 0.875em;
-  color: #697882;
-  display: block;
+.facebook .caption p {
+  font-size: 1.4rem;
+  margin: 2rem 0;
 }
 
 @media (max-width: 48em) {
-  .ig-body {
+  .sm-body {
     min-height: 0;
   }
 
-  .ig-footer {
+  .sm-footer {
     border-bottom: none;
   }
+
+  .twitter {
+    background: #e8e3db;
+    margin: 2rem -2rem;
+    padding: 2rem !important;
+  }
+
+  .twitter .sm-body {
+    min-height: 27rem;
+  }
+
+  .twitter a {
+    color: #501214;
+  }
+
+  .twitter .tweet-body p {
+    padding: 0 2rem;
+  }
+
+  .facebook .sm-footer {
+    margin-top: 3rem;
+  }
+
 }
