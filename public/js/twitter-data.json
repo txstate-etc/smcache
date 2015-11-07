@@ -13,7 +13,8 @@
     "image_url": null,
     "image_width": null,
     "image_height": null,
-    "video_url": null
+    "video_url": null,
+    "link": "//twitter.com/txst/status/647191648011747329"
   },
   {
     "id": 30,
@@ -29,7 +30,8 @@
     "image_url": "http://pbs.twimg.com/ext_tw_video_thumb/647091053569249281/pu/img/ingERq9AlTjFZ5Uq.jpg",
     "image_width": 600,
     "image_height": 338,
-    "video_url": "https://video.twimg.com/ext_tw_video/647091053569249281/pu/vid/640x360/YGIiWVGBjZtz7eDv.mp4"
+    "video_url": "https://video.twimg.com/ext_tw_video/647091053569249281/pu/vid/640x360/YGIiWVGBjZtz7eDv.mp4",
+    "link": "//twitter.com/txst/status/647091174730149888"
   },
   {
     "id": 31,
@@ -45,6 +47,7 @@
     "image_url": "http://pbs.twimg.com/media/CPrkqPHWsAADXeo.jpg",
     "image_width": 440,
     "image_height": 220,
-    "video_url": null
+    "video_url": null,
+    "link": "//twitter.com/txst/status/647080910999973888"
   }
 ]

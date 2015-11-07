@@ -55,6 +55,7 @@ a {-webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 3p
 
 .ig-image .caption {
   position: absolute;
+  width: 100%;
   opacity: 0; 
   bottom: -30%;
   color: white;

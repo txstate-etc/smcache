@@ -1,144 +1,39 @@
+var maintmpl = Handlebars.compile( $("#template-main").html());
+var igmaintmpl = Handlebars.compile( $("#template-igmain").html());
+var twmaintmpl = Handlebars.compile( $("#template-twmain").html());
+var fbmaintmpl = Handlebars.compile( $("#template-fbmain").html());
+var fbtmpl = Handlebars.compile( $("#template-facebook").html());
+var igtmpl = Handlebars.compile( $("#template-instagram").html());
+var twtmpl = Handlebars.compile( $("#template-twitter").html());
+Handlebars.registerPartial('partial-video', $("#partial-video").html());
+
+var videos = [];
+function createVideo(id) {
+  videos.push(videojs(id));
+}
+
+function destroyVideos() {
+   videos.forEach(function(v) {
+     v.dispose();
+   })
+   videos = [];
+}
+
 function populateFbook(el, item) {
-  $(el).append(fmtOneFbook(item));
+  $(el).append(fbtmpl(item));
   if (item.video_url) {
-    videojs("video-"+item.postid);
+    createVideo("video-"+item.postid);
   }
-}
-
-function fmtOneFbook(item) {
-  return '' +
-    '<div class="sm-wrap">' +
-      '<div class="sm-body">' +
-        '<div class="image">' +
-          fmtFbookVideo(item) +
-          fmtFbookImage(item) +
-        '</div>' +
-        '<div class="caption">' +
-          '<p>' + ellipsize(item.caption, 150) + '</p>' +
-          '<p class="link">(<a href="' + item.link + '">via Facebook</a>)</p>' +
-        '</div>' +
-      '</div>' +
-      '<div class="sm-footer">' +
-        '<p>' + 
-          '<span title="Time posted: '+fmtFbookTimeTitle(item.posttime)+'" class="posttime">' + fmtFbookTime(item.posttime) + '</span>' +
-          '<span class="social-area-icon"><a href="//www.facebook.com/TXSTATEU/"><i class="fa fa-facebook-official"></i></a></span>' +
-        '</p>' + 
-      '</div>' +
-    '</div>'
-  ;
-}
-
-function fmtFbookImage(item) {
-  if (item.video_url) {
-    return '';
-  }
-
-  return '<a href="'+ item.link +'">' +
-      '<img src="' + item.image_url + '">' +
-    '</a>';
-}
-
-function fmtFbookVideo(item) {
-  if (!item.video_url) {
-    return '';
-  }
-
-  return '' +
-    '<div class="fb-video-wrap">' +
-      '<video id="video-'+ item.postid +'" class="video-js vjs-default-skin ' +
-        'vjs-fluid vjs-big-play-centered" controls preload="auto" ' +
-        'poster="'+ item.image_url +'">' +
-        '<source src="'+ item.video_url +'" type="video/mp4" />' +
-        '<p class="vjs-no-js">' +
-          'To view this video please enable JavaScript, and consider upgrading to a web browser that ' +
-          '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
-        '</p>' +
-      '</video>' +
-    '</div>'
-  ;
-}
-
-function fmtFbookTime(time) {
-  return moment(time).fromNow();
-}
-
-function fmtFbookTimeTitle(time) {
-  //24 Sep 2015, 23:31:27 (UTC)
-  return moment(time).format('D MMM YYYY, HH:mm:ss (Z)')
 }
 
 function populateInsta(el, item) {
-  $(el).append(fmtOneInsta(item));
+  $(el).append(igtmpl(item));
   if (item.video_url) {
-    videojs("video-"+item.postid);
+    createVideo("video-"+item.postid);
   }
 }
 
-function fmtOneInsta(item) {
-  return '' +
-    '<div class="sm-wrap">' +
-      '<div class="sm-body">' +
-        '<div class="ig-image">' +
-          '<div class="image">' +
-            fmtInstaVideo(item) +
-            fmtInstaImage(item) +
-          '</div>' +
-          '<div class="caption">' +
-            '<p >' + linkifyInsta(ellipsize(item.caption, 150)) + '</p>' +
-            '<p class="link">(<a href="' + item.link + '">via Instagram</a>)</p>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="sm-footer">' +
-        '<p>' + 
-          '<span title="Time posted: '+fmtInstaTimeTitle(item.posttime)+'" class="posttime">' + fmtInstaTime(item.posttime) + '</span>' +
-          '<span class="social-area-icon"><a href="//instagram.com/txst"><i class="fa fa-instagram"></i></a></span>' +
-        '</p>' +
-      '</div>' +
-    '</div>'
-  ;
-}
-
-function fmtInstaImage(item) {
-  if (item.video_url) {
-    return '';
-  }
-
-  return '<a href="'+ item.link +'">' +
-      '<img src="' + item.image_url + '">' +
-    '</a>';
-}
-
-function fmtInstaVideo(item) {
-  if (!item.video_url) {
-    return '';
-  }
-
-  return '' +
-    '<div class="insta-video-wrap">' +
-      '<video id="video-'+ item.postid +'" class="video-js vjs-default-skin ' +
-        'vjs-fluid vjs-big-play-centered" controls preload="auto" ' +
-        'poster="'+ item.image_url +'">' +
-        '<source src="'+ item.video_url +'" type="video/mp4" />' +
-        '<p class="vjs-no-js">' +
-          'To view this video please enable JavaScript, and consider upgrading to a web browser that ' +
-          '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
-        '</p>' +
-      '</video>' +
-    '</div>'
-  ;
-}
-
-function fmtInstaTime(time) {
-  return moment(time).fromNow();
-}
-
-function fmtInstaTimeTitle(time) {
-  //24 Sep 2015, 23:31:27 (UTC)
-  return moment(time).format('D MMM YYYY, HH:mm:ss (Z)')
-}
-
-function linkifyInsta(text) {
+Handlebars.registerHelper('linkifyInsta', function(text) {
   if (!text) {
     return '';
   }
@@ -152,92 +47,34 @@ function linkifyInsta(text) {
   // linkify #hashtags
   text = text.replace(/(^|)#(\w+)/gi, '<a href="//instagram.com/explore/tags/$2/">$&</a>');  
 
+  // return new Handlebars.SafeString(text);
   return text;
-}
+});
 
 function populateTweet(el, item) {
-  $(el).append(fmtOneTweet(item));
+  item.postid = item.tweetid;
+  item.posttime = item.tweettime;
+  $(el).append(twtmpl(item));
   if (item.video_url) {
-    videojs("video-"+item.tweetid);
+    createVideo("video-"+item.tweetid);
   }
 }
 
-function fmtOneTweet(item) {
-  return '' +
-    '<div class="sm-wrap">' +
-      fmtTweetVideo(item) +
-      fmtTweetImage(item) +
-      '<div class="sm-body">' +
-        '<div class="tweet-header">' +
-          '<a class="screen-name" href="//twitter.com/' + item.screen_name + '">' +
-            '@' + item.screen_name +
-          '</a>' +
-          '<span class="display-name">' + item.display_name + '</span>' +
-        '</div>' +
-        '<div class="tweet-body">' +
-          '<p>' + linkifyTweet(item.text) + '</p>' +
-        '</div>' +
-      '</div>' +
-      '<div class="sm-footer">' +
-        '<p>' + 
-          '<a title="Time posted: '+fmtTweetTimeTitle(item.tweettime)+'" class="posttime" href="'+item.link+'">' + 
-            fmtTweetTime(item.tweettime) + 
-          '</a>' +
-          '<span class="social-area-icon"><a href="//instagram.com/txst"><i class="fa fa-twitter"></i></a></span>' +
-        '</p>' + 
-      '</div>' +
-    '</div>' 
-  ;
-}
-
-function fmtTweetImage(item) {
-  if (item.video_url || !item.image_url) {
-    return '';
-  }
-
-  return '' +
-    '<div class="tweet-image-wrap">' +
-      '<img id="image-'+ item.tweetid +'"' +
-        'src="'+ item.image_url +'"/>' +
-    '</div>'
-  ;
-}
-
-function fmtTweetVideo(item) {
-  if (!item.video_url) {
-    return '';
-  }
-
-  return '' +
-    '<div class="tweet-video-wrap">' +
-      '<video id="video-'+ item.tweetid +'" class="video-js vjs-default-skin ' +
-        'vjs-fluid vjs-big-play-centered" controls preload="auto" ' +
-        'poster="'+ item.image_url +'">' +
-        '<source src="'+ item.video_url +'" type="video/mp4" />' +
-        '<p class="vjs-no-js">' +
-          'To view this video please enable JavaScript, and consider upgrading to a web browser that ' +
-          '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
-        '</p>' +
-      '</video>' +
-    '</div>'
-  ;
-}
-
-function fmtTweetTime(time) {
+Handlebars.registerHelper('fmtTime', function(time) {
   t = moment(time);
   if (t.isBefore(moment().subtract(7, 'days'))) {
     return t.format('h:mm A - D MMM YYYY')
   } else {
     return t.fromNow();
   }
-}
+});
 
-function fmtTweetTimeTitle(time) {
+Handlebars.registerHelper('fmtTimeTitle', function(time) {
   //24 Sep 2015, 23:31:27 (UTC)
   return moment(time).format('D MMM YYYY, HH:mm:ss (Z)')
-}
+});
 
-function linkifyTweet(text) {
+Handlebars.registerHelper('linkifyTweet', function(text) {
   // final Pattern linkPattern = Pattern.compile("(https?://\\S+)", Pattern.CASE_INSENSITIVE);
   // final Pattern userPattern = Pattern.compile("(^|)@(\\w+)");
   // final Pattern hashtagPattern = Pattern.compile("(^|)#(\\w+)");
@@ -255,13 +92,14 @@ function linkifyTweet(text) {
   // linkify #hashtags
   text = text.replace(/(^|)#(\w+)/gi, '<a href="//twitter.com/search?q=%23$2">$&</a>');  
 
+  // return new Handlebars.SafeString(text);
   return text;
-}
+});
 
 // truncate string and append ellipsis if length is greater than len.
 // truncates on word boundary if possible. 
-function ellipsize(s, len) {
-  if (s.length <= len) {
+Handlebars.registerHelper('ellipsize', function(s, len) {
+  if (!s || s.length <= len) {
     return s;
   }
 
@@ -271,4 +109,5 @@ function ellipsize(s, len) {
   }
 
   return s.substr(0,len + wb) + '&hellip;';
-}
+  // return new Handlebars.SafeString(ret);
+});

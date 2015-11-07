@@ -40,18 +40,25 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/">Home</a></li>
-              <li><a href="/instacmp.html">Instagram</a></li>
-              <li><a href="/tweetcmp.html">Twitter</a></li>
+              <li class="active"><a href="#">Live</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
-
+      
       <div class="page-header">
         <h1>Recent Social Media Posts</h1>
         <p class="lead">Rotate through the 3 latest instagram, twitter, and facebook posts from @txst.</p>
       </div>
+
+      <div id="content"></div>
+    </div>
+
+    <!-- templates -->
+    <script id="template-main" type="text/x-handlebars-template">
 
       <div class="row">
 
@@ -74,11 +81,288 @@
         </div>
 
       </div>
-      
+    </script>
+ 
+    <script id="template-igmain" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="instagram-embed smbox">
+            <h2>Embed</h2>          
+            <div class="smcontainer">
+                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="5" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/8Q5t43hCpE/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_blank">@igsanmarcos photographer, @leafykara brings us this great shot of the @TXSTgalleries @igsanmarcos is taking over the #TXST Instagram account all this week. Check bag soon for more stunning photos like this one.</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Texas State University (@txst) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-09-30T18:02:51+00:00">Sep 30, 2015 at 11:02am PDT</time></p></div></blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="instagram smbox">
+            <h2>Ours</h2>          
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="instagram-embed smbox">
+            <h2>Embed</h2>          
+            <div class="smcontainer">
+              <blockquote class="instagram-media" data-instgrm-version="5" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://instagram.com/p/8Qj0N1hCgh/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A photo posted by Texas State University (@txst)</a> on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-09-30T14:51:29+00:00">Sep 30, 2015 at 7:51am PDT</time></p></div></blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="instagram smbox">
+            <h2>Ours</h2>          
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="instagram-embed smbox">
+            <h2>Embed</h2>          
+            <div class="smcontainer">
+              <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="5" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:28.125% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/8MJA0LhCnx/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_blank">@igsanmarcos is a community of student photographers using Instagram in new and creative ways. They will be taking over the @TXST Instagram account this week! Check back soon to see how they’re capturing extraordinary images of some familiar places!  #TXST #beabobcat</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A video posted by Texas State University (@txst) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-09-28T21:40:18+00:00">Sep 28, 2015 at 2:40pm PDT</time></p></div></blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="instagram smbox">
+            <h2>Ours</h2>          
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="template-twmain" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="twitter-embed smbox">
+            <h2>Embed</h2>
+            <div class="smcontainer">
+              <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Payment for the second installment for fall 2015 tuition is due Oct. 2 at 5pm: <a href="http://t.co/EQRbPy8NdF">http://t.co/EQRbPy8NdF</a></p>&mdash; Texas State Official (@txst) <a href="https://twitter.com/txst/status/647191648011747329">September 24, 2015</a></blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="twitter smbox">
+            <h2>Ours</h2>
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="twitter-embed smbox">
+            <h2>Embed</h2>
+            <div class="smcontainer">
+              <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Thank you to everyone who helped make yesterday’s reenactment of the the Book-It Brigade a success! <a href="https://twitter.com/hashtag/Alkek25?src=hash">#Alkek25</a> <a href="http://t.co/U1hGqDHHDf">pic.twitter.com/U1hGqDHHDf</a></p>&mdash; Texas State Official (@txst) <a href="https://twitter.com/txst/status/647091174730149888">September 24, 2015</a></blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="twitter smbox">
+            <h2>Ours</h2>
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="twitter-embed smbox">
+            <h2>Embed</h2>
+            <div class="smcontainer">
+              <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">The deadline to apply for fall <a href="https://twitter.com/hashtag/TXST?src=hash">#TXST</a> commencement is Oct 9. You can find the application here: <a href="http://t.co/HRL1ua7UmK">http://t.co/HRL1ua7UmK</a> <a href="http://t.co/4pVvvIIKC7">pic.twitter.com/4pVvvIIKC7</a></p>&mdash; Texas State Official (@txst) <a href="https://twitter.com/txst/status/647080910999973888">September 24, 2015</a></blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="twitter smbox">
+            <h2>Ours</h2>
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="template-fbmain" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="facebook-embed smbox">
+            <h2>Embed</h2>
+            <div class="smcontainer">
+              <div class="fb-post" data-href="https://www.facebook.com/TXSTATEU/posts/10156088564115567" data-width="500"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TXSTATEU/posts/10156088564115567"><p>Due to the continuing potential for severe weather, Texas State University has canceled all classes for the San Marcos...</p>Posted by <a href="https://www.facebook.com/TXSTATEU/">Texas State University</a> on&nbsp;<a href="https://www.facebook.com/TXSTATEU/posts/10156088564115567">Friday, October 30, 2015</a></blockquote></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="facebook smbox">
+            <h2>Ours</h2>
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="facebook-embed smbox">
+            <h2>Embed</h2>
+            <div class="smcontainer">
+              <div class="fb-post" data-href="https://www.facebook.com/TXSTATEU/videos/10156098704145567/" data-width="500"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TXSTATEU/videos/10156098704145567/"><p>The Higher Education Act, signed by Texas State University distinguished alumnus President Lyndon B. Johnson on this...</p>Posted by <a href="https://www.facebook.com/TXSTATEU/">Texas State University</a> on&nbsp;<a href="https://www.facebook.com/TXSTATEU/videos/10156098704145567/">Wednesday, November 4, 2015</a></blockquote></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="facebook smbox">
+            <h2>Ours</h2>
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="facebook-embed smbox">
+            <h2>Embed</h2>
+            <div class="smcontainer">
+              <div class="fb-post" data-href="https://www.facebook.com/TXSTATEU/posts/10156089878755567:0" data-width="500"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TXSTATEU/photos/a.313278130566.338739.199343000566/10156089878755567/?type=3"><p>Have a monstrously happy Halloween, Bobcats!</p>Posted by <a href="https://www.facebook.com/TXSTATEU/">Texas State University</a> on&nbsp;<a href="https://www.facebook.com/TXSTATEU/photos/a.313278130566.338739.199343000566/10156089878755567/?type=3">Saturday, October 31, 2015</a></blockquote></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="facebook smbox">
+            <h2>Ours</h2>
+            <div class="smcontainer"></div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="template-instagram" type="text/x-handlebars-template">
+      <div class="sm-wrap">
+        <div class="sm-body">
+          <div class="ig-image">
+            <div class="image">
+              {{#if video_url}}
+                <div class="insta-video-wrap">
+                  {{> partial-video}}
+                </div> 
+              {{else}}
+                <a href="{{link}}">
+                  <img src="{{image_url}}">
+                </a> 
+              {{/if}}
+            </div>
+            <div class="caption">
+              <p> {{{linkifyInsta (ellipsize caption 150) }}} </p>
+              <p class="link">(<a href="{{link}}">via Instagram</a>)</p>
+            </div>
+          </div>
+        </div>
+        <div class="sm-footer">
+          <p> 
+            <span title="Time posted: {{fmtTimeTitle posttime}}" class="posttime">
+              {{fmtTime posttime}}
+            </span>
+            <span class="social-area-icon">
+              <a href="//instagram.com/txst"><i class="fa fa-instagram"></i></a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </script>
+
+    <script id="template-facebook" type="text/x-handlebars-template">
+      <div class="sm-wrap">
+        <div class="sm-body">
+          <div class="image">
+            {{#if video_url}}
+              <div class="fb-video-wrap">
+                {{> partial-video}}
+              </div> 
+            {{else}}
+              <a href="{{link}}">
+                <img src="{{image_url}}">
+              </a> 
+            {{/if}}
+          </div>
+          <div class="caption">
+            <p> {{{ellipsize caption 150}}} </p>
+            <p class="link">(<a href="{{link}}">via Facebook</a>)</p>
+          </div>
+        </div>
+        <div class="sm-footer">
+          <p> 
+            <span title="Time posted: {{fmtTimeTitle posttime}}" class="posttime"> 
+              {{fmtTime posttime}}
+            </span>
+            <span class="social-area-icon">
+              <a href="//www.facebook.com/TXSTATEU/"><i class="fa fa-facebook-official"></i></a>
+            </span>
+          </p> 
+        </div>
+      </div>
+    </script>
+    
+    <script id="template-twitter" type="text/x-handlebars-template">
+      <div class="sm-wrap">
+        {{#if video_url}}
+          <div class="tweet-video-wrap">
+            {{> partial-video}}
+          </div> 
+        {{else}}
+          <a href="{{link}}">
+            <img src="{{image_url}}">
+          </a> 
+        {{/if}}
+        <div class="sm-body">
+          <div class="tweet-header">
+            <a class="screen-name" href="//twitter.com/{{screen_name}}">
+              @{{screen_name}}
+            </a>
+            <span class="display-name">{{display_name}}</span>
+          </div>
+          <div class="tweet-body">
+            <p>{{{linkifyTweet text}}}</p>
+          </div>
+        </div>
+        <div class="sm-footer">
+          <p> 
+            <a title="Time posted: {{fmtTimeTitle tweettime}}" class="posttime" href="{{link}}"> 
+              {{fmtTime tweettime}} 
+            </a>
+            <span class="social-area-icon">
+              <a href="//instagram.com/txst"><i class="fa fa-twitter"></i></a>
+            </span>
+          </p> 
+        </div>
+      </div>
+    </script>
+
+    <script id="partial-video" type="text/x-handlebars-template">
+      <video id="video-{{postid}}" class="sm-video video-js vjs-default-skin 
+        vjs-fluid vjs-big-play-centered" controls preload="auto" 
+        poster="{{image_url}}">
+        <source src="{{video_url}}" type="video/mp4" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that 
+          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+    </script>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="//platform.instagram.com/en_US/embeds.js"></script>
+    <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3"></script>
+    <script src="https://cdn.jsdelivr.net/handlebarsjs/4.0.4/handlebars.min.js"></script>
     <script src="http://vjs.zencdn.net/5.0/video.min.js"></script>
     <script src="//cdn.jsdelivr.net/jquery.slick/1.5.8/slick.min.js"></script>
     <script src="js/moment.js"></script>
