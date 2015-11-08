@@ -35,7 +35,7 @@ class BaseJob
 
   def reschedule(job)
     self.class.jobs.each{|j| j.destroy unless j == job}
-    Delayed::Job.enqueue self.class.new, run_at: 1.minute.from_now
+    Delayed::Job.enqueue self.class.new, run_at: 2.minute.from_now
   end
 
   def self.jobs
