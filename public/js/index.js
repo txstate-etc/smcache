@@ -1,7 +1,3 @@
-var tweets = [];
-var instas = [];
-var fbooks = [];
-
 var slick_opts = {
   speed: 500,
   fade: true,
@@ -11,49 +7,32 @@ var slick_opts = {
   // adaptiveHeight: true,
 };
 
-function updateInstas() {
+function updateInstas(instas) {
   if (instas.length == 0) {
     return;
   }
 
   var $container = $('.instagram .smcontainer');
-
   $container.empty();
-
-  // instas.forEach(function(item){
-  //   populateInsta($container, item);
-  // });
-  
   populateInsta($container, instas[0]);
-
-  // $container.slick(slick_opts);
 }
 
-function updateFbooks() {
+function updateFbooks(fbooks) {
   if (fbooks.length == 0) {
     return;
   }
 
   var $container = $('.facebook .smcontainer');
-
   $container.empty();
-
-  // fbooks.forEach(function(item){
-  //   populateFbook($container, item);
-  // });
-
   populateFbook($container, fbooks[0]);
-
-  // $container.slick(slick_opts);
 }
 
-function updateTweets() {
+function updateTweets(tweets) {
   if (tweets.length == 0) {
     return;
   }
 
   var $container = $('.twitter .smcontainer');
-
   $container.empty();
 
   // tweets.forEach(function(item){
@@ -67,22 +46,13 @@ function updateTweets() {
 
 function loadMain() {
   $('.page-header h1').text('Recent Social Media Posts');
-  $('.page-header p').text('Rotate through the 3 latest instagram, twitter, and facebook posts from @txst.');
+  $('.page-header p').text('The latest instagram, twitter, and facebook posts from @txst.');
   $('#content').html(maintmpl());
 
-  $.ajax("twitter").done(function(data) {
-    tweets = data;
-    updateTweets();
-  });
-
-  $.ajax("instagram").done(function(data) {
-    instas = data;
-    updateInstas();
-  });
-
-  $.ajax("facebook").done(function(data) {
-    fbooks = data;
-    updateFbooks();
+  $.ajax("all").done(function(data) {
+    updateInstas(data.instagram);
+    updateTweets(data.twitter);
+    updateFbooks(data.facebook);
   });
 }
 
@@ -147,6 +117,5 @@ $(function() {
     }
   });
 
-  // loadFacebook();
   loadMain();
 });

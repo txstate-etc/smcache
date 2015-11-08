@@ -39,6 +39,10 @@ a {-webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 3p
   min-height: 35rem;
 }
 
+a.sm-image {
+  display:block;
+}
+
 .ig-image {
   position: relative;
   overflow: hidden;

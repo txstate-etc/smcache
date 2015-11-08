@@ -3,6 +3,10 @@ class Tweet < ActiveRecord::Base
   scope :nofav, -> { where(favorite: false) }
   scope :fav, -> { where(favorite: true) }
 
+  def self.recent_combined
+    (Tweet.recent.nofav + Tweet.recent.fav).sort { |a,b| b.tweettime <=> a.tweettime }.first(3)
+  end
+
   # MySQL is barfing on emojis so we are storing text fields as binary.
   # Force the encoding to UTF8 here so that everything renders ok in the app.
   def text
@@ -25,21 +29,13 @@ private
       exclude_replies: true,
       include_rts: false
     }
-    since_id = min_id(false)
-    opts[:since_id] = since_id.first if since_id.present?
 
     fetch_and_save(false) { client.user_timeline("txst", opts) }
   end
 
   def self.fetchfavorites!
     opts = {}
-    since_id = min_id(true)
-    opts[:since_id] = since_id.first if since_id.present?
     fetch_and_save(true) { client.favorites("txst", opts) }    
-  end
-
-  def self.min_id(favorite)
-    Tweet.where(favorite: favorite).order('tweettime DESC').limit(1).pluck(:tweetid)
   end
   
   def self.check_rate_limit(favorite)

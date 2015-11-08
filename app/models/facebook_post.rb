@@ -13,15 +13,10 @@ class FacebookPost < ActiveRecord::Base
   # Max number of results to return
   COUNT = 20
 
-  def self.min_id
-    @min_id ||= FacebookPost.order('posttime DESC').limit(1).pluck(:postid).first
-  end
-
   def self.fetch!
-    logger.debug("Fetching last #{COUNT} Facebook posts newer than #{min_id}")
+    logger.debug("Fetching last #{COUNT} Facebook posts")
 
-    # results = client.user_recent_media TXST_ID, min_id: min_id, count: COUNT
-    results = client.get_connections(TXST_ID, "posts", {fields: ['message', 'description', 'name', 'id', 'type','full_picture', 'link', 'created_time', 'source']})
+    results = client.get_connections(TXST_ID, "posts", {limit: COUNT, fields: ['message', 'description', 'name', 'id', 'type','full_picture', 'link', 'created_time', 'source']})
     logger.debug("Facebook returned #{results.try(:length)} results")
 
     added = changed = unchanged = 0

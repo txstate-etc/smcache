@@ -14,14 +14,10 @@ class InstagramPost < ActiveRecord::Base
   # Max number of results to return
   COUNT = 20
 
-  def self.min_id
-    @min_id ||= InstagramPost.order('posttime DESC').limit(1).pluck(:postid).first
-  end
-
   def self.fetch!
-    logger.debug("Fetching last #{COUNT} Instagram posts newer than #{min_id}")
+    logger.debug("Fetching last #{COUNT} Instagram posts")
 
-    results = client.user_recent_media TXST_ID, min_id: min_id, count: COUNT
+    results = client.user_recent_media TXST_ID, count: COUNT
 
     logger.debug("Instagram returned #{results.try(:length)} results")
 
