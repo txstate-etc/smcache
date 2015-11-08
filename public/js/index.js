@@ -70,17 +70,17 @@ function loadMain() {
   $('.page-header p').text('Rotate through the 3 latest instagram, twitter, and facebook posts from @txst.');
   $('#content').html(maintmpl());
 
-  $.ajax("/twitter").done(function(data) {
+  $.ajax("twitter").done(function(data) {
     tweets = data;
     updateTweets();
   });
 
-  $.ajax("/instagram").done(function(data) {
+  $.ajax("instagram").done(function(data) {
     instas = data;
     updateInstas();
   });
 
-  $.ajax("/facebook").done(function(data) {
+  $.ajax("facebook").done(function(data) {
     fbooks = data;
     updateFbooks();
   });
@@ -90,7 +90,7 @@ function loadInstagram() {
   $('.page-header h1').text('Instagram Comparison');
   $('.page-header p').text('Official embed code on left, our code on right.');
   $('#content').html(igmaintmpl());
-  $.ajax("/js/instagram-data.json").done(function(data) {
+  $.ajax("js/instagram-data.json").done(function(data) {
     if (data.length) {
       $('.instagram.smbox .smcontainer').each(function(i) {
         populateInsta(this, data[i]);
@@ -104,7 +104,7 @@ function loadTwitter() {
   $('.page-header h1').text('Twitter Comparison');
   $('.page-header p').text('Official embed code on left, our code on right.');
   $('#content').html(twmaintmpl());
-  $.ajax("/js/twitter-data.json").done(function(data) {
+  $.ajax("js/twitter-data.json").done(function(data) {
     if (data.length) {
       $('.twitter.smbox .smcontainer').each(function(i) {
         populateTweet(this, data[i]);
@@ -118,7 +118,7 @@ function loadFacebook() {
   $('.page-header h1').text('Facebook Comparison');
   $('.page-header p').text('Official embed code on left, our code on right.');
   $('#content').html(fbmaintmpl());
-  $.ajax("/js/facebook-data.json").done(function(data) {
+  $.ajax("js/facebook-data.json").done(function(data) {
     if (data.length) {
       $('.facebook.smbox .smcontainer').each(function(i) {
         populateFbook(this, data[i]);
