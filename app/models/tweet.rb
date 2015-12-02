@@ -4,7 +4,7 @@ class Tweet < ActiveRecord::Base
   scope :fav, -> { where(favorite: true) }
 
   def self.recent_combined
-    (Tweet.recent.nofav + Tweet.recent.fav).sort { |a,b| b.tweettime <=> a.tweettime }.first(3)
+    (Tweet.recent.nofav + Tweet.recent.fav).sort { |a,b| b.tweettime <=> a.tweettime }
   end
 
   # MySQL is barfing on emojis so we are storing text fields as binary.

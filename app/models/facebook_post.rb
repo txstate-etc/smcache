@@ -1,5 +1,6 @@
 class FacebookPost < ActiveRecord::Base
   scope :recent, -> { order('posttime DESC').limit(3) }
+  scope :photo, -> { where(mediatype: 'photo') }
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
   # Force the encoding to UTF8 here so that everything renders ok in the app.

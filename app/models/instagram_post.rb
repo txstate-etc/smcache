@@ -1,5 +1,6 @@
 class InstagramPost < ActiveRecord::Base
   scope :recent, -> { order('posttime DESC').limit(3) }
+  scope :images, -> { where(mediatype: 'image') }
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
   # Force the encoding to UTF8 here so that everything renders ok in the app.

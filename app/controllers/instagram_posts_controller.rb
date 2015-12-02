@@ -1,11 +1,23 @@
+require "net/http"
+require "uri"
+
 class InstagramPostsController < ApplicationController
 
   # GET /instagram_posts
   # GET /instagram_posts.json
   def index
-    @instagram_posts = InstagramPost.recent
+    @instagram_posts = InstagramPost.images.recent
 
-    render json: @instagram_posts
+    json = @instagram_posts.as_json
+    json.each do |j|
+      j['image_proxy'] = instagram_img_url(j['id'], File.basename(URI.parse(j['image_url']).path)) rescue nil
+    end
+    render json: json
+  end
+
+  def img
+    @post = InstagramPost.find(params[:id])
+    proxy(@post.image_url)
   end
 
 end
