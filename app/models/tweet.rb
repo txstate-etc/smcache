@@ -12,6 +12,9 @@ class Tweet < ActiveRecord::Base
   def text
     @text_utf8 ||= read_attribute(:text).dup.force_encoding(Encoding::UTF_8)
   end
+  def html
+    @html_utf8 ||= read_attribute(:html).dup.force_encoding(Encoding::UTF_8)
+  end
 
   def display_name
     @display_name_utf8 ||= read_attribute(:display_name).dup.force_encoding(Encoding::UTF_8)
@@ -81,6 +84,7 @@ private
       t = Tweet.find_or_initialize_by(tweetid: r.id)
       t.tweettime = r.created_at
       t.text = r.text
+      t.html = linkify(r)
       t.screen_name = r.user.screen_name
       t.display_name = r.user.name
       t.profile_image = r.user.profile_image_url.to_s
@@ -117,6 +121,32 @@ private
 
     logger.debug("#{type} results: #{added} added, #{changed} updated, #{unchanged} unchanged")
     return total
+  end
+
+  def self.linkify(t)
+    text = t.text.dup
+
+    urls = {}
+    t.uris.each do |u|
+      urls[u.url.to_s] = u.display_url
+    end
+    t.media.each do |u|
+      urls[u.url.to_s] = u.display_url
+    end
+
+    puts urls.to_yaml
+
+    # replace url with display_url
+    text.gsub!(%r{(https?://\S+)}i) do 
+      url = Regexp.last_match[1]
+      display_url = urls[url] || url
+      "<a href='#{url}'>#{display_url}</a>"
+    end
+    
+    text.gsub!(/(^|)@(\w+)/i, '<a href="//twitter.com/\2">\0</a>')
+    text.gsub!(/(^|)#(\w+)/i, '<a href="//twitter.com/search?q=%23\2">\0</a>')
+
+    text
   end
 
   def self.best_video(variants)
