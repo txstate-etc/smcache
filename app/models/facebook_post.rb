@@ -1,6 +1,6 @@
 class FacebookPost < ActiveRecord::Base
   scope :recent, -> { order('posttime DESC').limit(3) }
-  scope :photo, -> { where(mediatype: 'photo') }
+  scope :photoOrLink, -> { where(mediatype: ['photo', 'link']).where.not(image_url: nil).where.not(caption: nil) }
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
   # Force the encoding to UTF8 here so that everything renders ok in the app.
@@ -27,8 +27,8 @@ class FacebookPost < ActiveRecord::Base
 
       i = FacebookPost.find_or_initialize_by(postid: r['id'])
       i.posttime = posttime
-      i.link = r['link']
-      i.caption = r['message'] || r['description'] || r['name']
+      i.link = fmt_link(r)
+      i.caption = r['message']# || r['description'] || r['name']
       i.mediatype = r['type']
 
       i.image_url = r['full_picture']
@@ -62,6 +62,12 @@ class FacebookPost < ActiveRecord::Base
   end
 
 private
+
+  def self.fmt_link(r)
+    return r['link'] unless r['type'] == 'link'
+    "//www.facebook.com/#{TXST_ID}/posts/#{r['id'].gsub(/^[^_]*_/, '')}"
+  end
+
   def self.client
     @@client ||= Koala::Facebook::API.new("#{Rails.application.secrets.facebook_key}|#{Rails.application.secrets.facebook_secret}")
   end

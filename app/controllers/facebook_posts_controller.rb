@@ -3,7 +3,7 @@ class FacebookPostsController < ApplicationController
   # GET /facebook_posts
   # GET /facebook_posts.json
   def index
-    @facebook_posts = FacebookPost.photo.recent
+    @facebook_posts = FacebookPost.photoOrLink.recent
 
     json = @facebook_posts.as_json
     json.each do |j|

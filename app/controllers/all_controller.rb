@@ -3,7 +3,7 @@ class AllController < ApplicationController
   def index
     @instagram_posts = InstagramPost.images.recent
     @tweets = Tweet.recent_combined
-    @facebook_posts = FacebookPost.photo.recent
+    @facebook_posts = FacebookPost.photoOrLink.recent
     
     @instagram_posts = @instagram_posts.as_json
     @instagram_posts.each do |j|
