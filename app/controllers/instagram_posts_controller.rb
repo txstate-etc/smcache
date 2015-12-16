@@ -17,7 +17,8 @@ class InstagramPostsController < ApplicationController
 
   def img
     @post = InstagramPost.find(params[:id])
-    proxy(@post.image_url)
+    expires_in 5.minutes
+    proxy(@post.image_url) if stale?(@post, public: true)
   end
 
 end

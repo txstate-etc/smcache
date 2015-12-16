@@ -8,6 +8,17 @@ class FacebookPost < ActiveRecord::Base
     @caption_utf8 ||= read_attribute(:caption).dup.force_encoding(Encoding::UTF_8) rescue ''
   end
 
+  def image_filename
+    # make sure filename is unique so it can be used as a cache buster
+    fname = File.basename(URI.parse(image_url).path) rescue 'image'
+    h = (updated_at || Time.now).strftime('%Y%m%d%H%M%S')
+    "#{h}_#{fname}"
+  end
+
+  def as_json(opts={})
+    super(opts.merge({methods: ((opts[:methods] || []) | [:image_filename])}))
+  end
+
   # User ID for txst facebook account
   TXST_ID = 'txstateu'
 

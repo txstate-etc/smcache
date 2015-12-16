@@ -17,7 +17,8 @@ class AllController < ApplicationController
 
     @facebook_posts = @facebook_posts.as_json
     @facebook_posts.each do |j|
-      j['image_proxy'] = facebook_img_url(j['id'], File.basename(URI.parse(j['image_url']).path)) rescue nil
+      fname = j.delete('image_filename')
+      j['image_proxy'] = facebook_img_url(j['id'], fname) rescue nil
     end
 
     render json: {
