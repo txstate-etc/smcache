@@ -18,6 +18,9 @@ gem 'instagram'
 gem 'twitter'
 gem 'koala' # facebook  
 
+# httprb: Better http client than Net::HTTP
+gem "http"
+
 # sends you an email when an exception occurs
 gem 'exception_notification'
 

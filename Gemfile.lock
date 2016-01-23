@@ -196,6 +196,7 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   exception_notification
+  http
   instagram
   koala
   mysql2 (~> 0.3.18)
