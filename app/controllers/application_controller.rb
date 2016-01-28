@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   def proxy(url)
     logger.debug "Proxying to #{url}"
 
-    proxy_response = HTTP.timeout(:per_operation, :connect => 3, :read => 1, :write => 1).get(url)
+    proxy_response = HTTP.timeout(:per_operation, :connect => 4, :read => 3, :write => 3).get(url)
 
     send_data proxy_response.body, 
       content_type: proxy_response['Content-Type'], 
