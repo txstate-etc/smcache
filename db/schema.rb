@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204000000) do
+ActiveRecord::Schema.define(version: 20160125000000) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -43,8 +43,10 @@ ActiveRecord::Schema.define(version: 20151204000000) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.text     "link",         limit: 65535
+    t.datetime "last_seen"
   end
 
+  add_index "facebook_posts", ["last_seen", "posttime"], name: "index_facebook_posts_on_last_seen_and_posttime", using: :btree
   add_index "facebook_posts", ["postid"], name: "index_facebook_posts_on_postid", unique: true, using: :btree
   add_index "facebook_posts", ["posttime"], name: "index_facebook_posts_on_posttime", using: :btree
 
@@ -62,8 +64,10 @@ ActiveRecord::Schema.define(version: 20151204000000) do
     t.integer  "video_width",  limit: 4
     t.integer  "video_height", limit: 4
     t.text     "link",         limit: 65535
+    t.datetime "last_seen"
   end
 
+  add_index "instagram_posts", ["last_seen", "posttime"], name: "index_instagram_posts_on_last_seen_and_posttime", using: :btree
   add_index "instagram_posts", ["postid"], name: "index_instagram_posts_on_postid", unique: true, using: :btree
   add_index "instagram_posts", ["posttime"], name: "index_instagram_posts_on_posttime", using: :btree
 
@@ -83,8 +87,11 @@ ActiveRecord::Schema.define(version: 20151204000000) do
     t.text     "video_url",     limit: 65535
     t.text     "link",          limit: 65535
     t.binary   "html",          limit: 65535
+    t.datetime "last_seen"
   end
 
+  add_index "tweets", ["last_seen", "tweettime", "favorite"], name: "index_tweets_on_last_seen_and_tweettime_and_favorite", using: :btree
+  add_index "tweets", ["last_seen", "tweettime"], name: "index_tweets_on_last_seen_and_tweettime", using: :btree
   add_index "tweets", ["tweetid"], name: "index_tweets_on_tweetid", unique: true, using: :btree
   add_index "tweets", ["tweettime", "favorite"], name: "tweets_time_fav", using: :btree
   add_index "tweets", ["tweettime"], name: "index_tweets_on_tweettime", using: :btree

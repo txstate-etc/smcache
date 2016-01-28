@@ -1,5 +1,5 @@
 class InstagramPost < ActiveRecord::Base
-  scope :recent, -> { order('posttime DESC').limit(3) }
+  scope :recent, -> { order('last_seen DESC, posttime DESC').limit(3) }
   scope :images, -> { where(mediatype: 'image') }
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
@@ -22,6 +22,7 @@ class InstagramPost < ActiveRecord::Base
 
     logger.debug("Instagram returned #{results.try(:length)} results")
 
+    last_seen = Time.now
     added = changed = unchanged = 0
     results.each_with_index do |r, idx|
       posttime = Time.at(r.created_time.to_i)
@@ -54,6 +55,7 @@ class InstagramPost < ActiveRecord::Base
         unchanged += 1
       end
 
+      i.last_seen = last_seen
       i.save!
 
       logger.debug("Instagram post #{log_prefix}: #{i}") if log_prefix

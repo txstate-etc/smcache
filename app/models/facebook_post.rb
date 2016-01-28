@@ -1,5 +1,5 @@
 class FacebookPost < ActiveRecord::Base
-  scope :recent, -> { order('posttime DESC').limit(3) }
+  scope :recent, -> { order('last_seen DESC, posttime DESC').limit(3) }
   scope :photoOrLink, -> { where(mediatype: ['photo', 'link']).where.not(image_url: nil).where.not(caption: nil) }
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
@@ -31,6 +31,7 @@ class FacebookPost < ActiveRecord::Base
     results = client.get_connections(TXST_ID, "posts", {limit: COUNT, fields: ['message', 'description', 'name', 'id', 'type','full_picture', 'link', 'created_time', 'source']})
     logger.debug("Facebook returned #{results.try(:length)} results")
 
+    last_seen = Time.now
     added = changed = unchanged = 0
     results.each_with_index do |r, idx|
       posttime = r['created_time'].to_datetime
@@ -63,6 +64,7 @@ class FacebookPost < ActiveRecord::Base
         unchanged += 1
       end
 
+      i.last_seen = last_seen
       i.save!
 
       logger.debug("Facebook post #{log_prefix}: #{i}") if log_prefix

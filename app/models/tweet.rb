@@ -1,5 +1,5 @@
 class Tweet < ActiveRecord::Base
-  scope :recent, -> { order('tweettime DESC').limit(3) }
+  scope :recent, -> { order('last_seen DESC, tweettime DESC').limit(3) }
   scope :nofav, -> { where(favorite: false) }
   scope :fav, -> { where(favorite: true) }
 
@@ -77,6 +77,7 @@ private
     return 0 if results.empty?
 
     total = added = changed = unchanged = 0
+    last_seen = Time.now
     results.each_with_index do |r, idx|
       logger.debug("#{type} #{idx}: id: #{r.id}, time: #{r.created_at}")
       total += 1
@@ -112,6 +113,12 @@ private
         log_prefix = nil
         unchanged += 1
       end
+
+      # Add a last_seen timestamp to the record, set to the current time (initialized
+      # outside this loop so all records have the same value).
+      # When displaying, order by last_seen DESC so that tweets that have been 
+      # deleted will sort after all others.
+      t.last_seen = last_seen
 
       t.save!
 
