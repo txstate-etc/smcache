@@ -11,7 +11,7 @@ class FacebookPost < ActiveRecord::Base
   def image_filename
     # make sure filename is unique so it can be used as a cache buster
     fname = File.basename(URI.parse(image_url).path) rescue 'image'
-    h = (updated_at || Time.now).strftime('%Y%m%d%H%M%S')
+    h = Base64.urlsafe_encode64(Digest::MD5.digest(image_url)).gsub(%r{=},'')
     "#{h}_#{fname}"
   end
 
