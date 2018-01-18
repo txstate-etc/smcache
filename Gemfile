@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.10'
 
 gem 'rails-api'
 
@@ -16,7 +16,7 @@ gem 'delayed_job_active_record'
 
 gem 'instagram'
 gem 'twitter'
-gem 'koala' # facebook  
+gem 'koala' # facebook
 
 # httprb: Better http client than Net::HTTP
 gem "http"
