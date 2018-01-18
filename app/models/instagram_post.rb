@@ -1,5 +1,5 @@
 class InstagramPost < ActiveRecord::Base
-  scope :recent, -> { order('last_seen DESC, posttime DESC').limit(3) }
+  scope :recent, -> { includes(:slides).order('last_seen DESC, posttime DESC').limit(3) }
   scope :images, -> { where(mediatype: ['image','video','carousel']) }
 
   has_many :slides, class_name: 'InstagramSlide', dependent: :destroy, inverse_of: :post
