@@ -4,8 +4,8 @@ class AllController < ApplicationController
     @instagram_posts = InstagramPost.images.recent
     @tweets = Tweet.recent_combined
     @facebook_posts = FacebookPost.photoOrLink.recent
-    
-    @instagram_posts = @instagram_posts.as_json
+
+    @instagram_posts = @instagram_posts.as_json(:include => { :slides => { :except => [:id, :instagram_post_id] } })
     @instagram_posts.each do |j|
       j['image_proxy'] = instagram_img_url(j['id'], File.basename(URI.parse(j['image_url']).path)) rescue nil
     end

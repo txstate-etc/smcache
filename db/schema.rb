@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125000000) do
+ActiveRecord::Schema.define(version: 20180118004732) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -70,6 +70,17 @@ ActiveRecord::Schema.define(version: 20160125000000) do
   add_index "instagram_posts", ["last_seen", "posttime"], name: "index_instagram_posts_on_last_seen_and_posttime", using: :btree
   add_index "instagram_posts", ["postid"], name: "index_instagram_posts_on_postid", unique: true, using: :btree
   add_index "instagram_posts", ["posttime"], name: "index_instagram_posts_on_posttime", using: :btree
+
+  create_table "instagram_slides", force: :cascade do |t|
+    t.integer "instagram_post_id", limit: 4,   default: 0,  null: false
+    t.string  "url",               limit: 255, default: "", null: false
+    t.string  "mediatype",         limit: 255, default: "", null: false
+    t.integer "width",             limit: 4,   default: 0,  null: false
+    t.integer "height",            limit: 4,   default: 0,  null: false
+    t.string  "video_url",         limit: 255, default: "", null: false
+  end
+
+  add_index "instagram_slides", ["url"], name: "index_instagram_slides_on_url", unique: true, using: :btree
 
   create_table "tweets", force: :cascade do |t|
     t.string   "tweetid",       limit: 255

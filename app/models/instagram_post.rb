@@ -1,6 +1,8 @@
 class InstagramPost < ActiveRecord::Base
   scope :recent, -> { order('last_seen DESC, posttime DESC').limit(3) }
-  scope :images, -> { where(mediatype: 'image') }
+  scope :images, -> { where(mediatype: ['image','video','carousel']) }
+
+  has_many :slides, class_name: 'InstagramSlide', dependent: :destroy, inverse_of: :post
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
   # Force the encoding to UTF8 here so that everything renders ok in the app.
@@ -37,7 +39,23 @@ class InstagramPost < ActiveRecord::Base
       i.image_url = r.images.standard_resolution.url
       i.image_width = r.images.standard_resolution.width
       i.image_height = r.images.standard_resolution.height
-      
+
+      if !r.carousel_media.blank?
+        currentslides = []
+        r.carousel_media.each do |media|
+          s = InstagramSlide.find_or_initialize_by(url: media.images.standard_resolution.url)
+          s.width = media.images.standard_resolution.width
+          s.height = media.images.standard_resolution.height
+          s.mediatype = media.type
+          if media.videos
+            s.video_url = media.videos.standard_resolution.url
+          end
+          currentslides.push(s)
+        end
+        i.slides = i.slides & currentslides
+        i.slides << currentslides - i.slides
+      end
+
       if r.videos
         i.video_url = r.videos.standard_resolution.url
         i.video_width = r.videos.standard_resolution.width
