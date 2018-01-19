@@ -1,6 +1,8 @@
 class FacebookPost < ActiveRecord::Base
-  scope :recent, -> { order('last_seen DESC, posttime DESC').limit(3) }
-  scope :photoOrLink, -> { where(mediatype: ['photo', 'link']).where.not(image_url: nil).where.not(caption: nil) }
+  scope :recent, -> { includes(:slides).order('last_seen DESC, posttime DESC').limit(3) }
+  scope :photoOrLink, -> { where(mediatype: ['album', 'photo', 'link', 'video']).where.not(image_url: nil).where.not(caption: nil) }
+
+  has_many :slides, class_name: 'FacebookSlide', dependent: :destroy, inverse_of: :post
 
   # MySQL is barfing on emojis so we are storing text fields as binary.
   # Force the encoding to UTF8 here so that everything renders ok in the app.
@@ -28,7 +30,7 @@ class FacebookPost < ActiveRecord::Base
   def self.fetch!
     logger.debug("Fetching last #{COUNT} Facebook posts")
 
-    results = client.get_connections(TXST_ID, "posts", {limit: COUNT, fields: ['message', 'description', 'name', 'id', 'type','full_picture', 'link', 'created_time', 'source']})
+    results = client.get_connections(TXST_ID, "posts", {limit: COUNT, fields: ['message', 'description', 'name', 'id', 'type','full_picture', 'link', 'created_time', 'source', 'attachments']})
     logger.debug("Facebook returned #{results.try(:length)} results")
 
     last_seen = Time.now
@@ -46,7 +48,24 @@ class FacebookPost < ActiveRecord::Base
       i.image_url = r['full_picture']
       # i.image_width = r.images.standard_resolution.width
       # i.image_height = r.images.standard_resolution.height
-      
+
+      if r['message'].include?("1956")
+        if r['attachments'] && r['attachments']['data'][0]['subattachments'] && subattachments = r['attachments']['data'][0]['subattachments']['data']
+          currentslides = []
+          subattachments.each do |suba|
+            media = suba['media']
+            s = FacebookSlide.find_or_initialize_by(facebook_post_id: i.id, url: media['image']['src'])
+            s.width = media['image']['width']
+            s.height = media['image']['height']
+            s.mediatype = suba['type']
+            currentslides.push(s)
+          end
+          i.slides = i.slides & currentslides
+          i.slides << currentslides - i.slides
+          i.mediatype = "album"
+        end
+      end
+
       if r['type'] == 'video'
         i.video_url = r['source']
         # i.video_width = r.videos.standard_resolution.width

@@ -15,7 +15,7 @@ class AllController < ApplicationController
     #   j['image_proxy'] = twitter_img_url(j['id'], File.basename(URI.parse(j['image_url']).path)) rescue nil
     # end
 
-    @facebook_posts = @facebook_posts.as_json
+    @facebook_posts = @facebook_posts.as_json(:include => { :slides => { :except => [:id, :facebook_post_id] } })
     @facebook_posts.each do |j|
       fname = j.delete('image_filename')
       j['image_proxy'] = facebook_img_url(j['id'], fname) rescue nil
