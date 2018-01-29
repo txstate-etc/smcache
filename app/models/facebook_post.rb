@@ -68,8 +68,15 @@ class FacebookPost < ActiveRecord::Base
 
       if r['type'] == 'video'
         i.video_url = r['source']
+        if i.video_embed_html.blank?
+          video_id = r['attachments']['data'][0]['target']['id']
+          caption_result = client.get_object(video_id, { fields: ['embed_html'] })
+          i.video_embed_html = caption_result['embed_html']
+        end
         # i.video_width = r.videos.standard_resolution.width
         # i.video_height = r.videos.standard_resolution.height
+      else
+        i.video_embed_html = ''
       end
 
       if i.new_record?

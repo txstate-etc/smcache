@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119211852) do
+ActiveRecord::Schema.define(version: 20180129163735) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -30,20 +30,21 @@ ActiveRecord::Schema.define(version: 20180119211852) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "facebook_posts", force: :cascade do |t|
-    t.string   "postid",       limit: 255,   null: false
-    t.datetime "posttime",                   null: false
-    t.binary   "caption",      limit: 65535
-    t.text     "image_url",    limit: 65535
-    t.integer  "image_width",  limit: 4
-    t.integer  "image_height", limit: 4
-    t.string   "mediatype",    limit: 255
-    t.text     "video_url",    limit: 65535
-    t.integer  "video_width",  limit: 4
-    t.integer  "video_height", limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.text     "link",         limit: 65535
+    t.string   "postid",           limit: 255,   null: false
+    t.datetime "posttime",                       null: false
+    t.binary   "caption",          limit: 65535
+    t.text     "image_url",        limit: 65535
+    t.integer  "image_width",      limit: 4
+    t.integer  "image_height",     limit: 4
+    t.string   "mediatype",        limit: 255
+    t.text     "video_url",        limit: 65535
+    t.integer  "video_width",      limit: 4
+    t.integer  "video_height",     limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "link",             limit: 65535
     t.datetime "last_seen"
+    t.text     "video_embed_html", limit: 65535, null: false
   end
 
   add_index "facebook_posts", ["last_seen", "posttime"], name: "index_facebook_posts_on_last_seen_and_posttime", using: :btree
