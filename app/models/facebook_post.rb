@@ -1,6 +1,6 @@
 class FacebookPost < ActiveRecord::Base
   scope :recent, -> { includes(:slides).order('last_seen DESC, posttime DESC').limit(3) }
-  scope :photoOrLink, -> { where(mediatype: ['album']).where.not(image_url: nil).where.not(caption: nil) }
+  scope :photoOrLink, -> { where(mediatype: ['album', 'photo', 'link', 'video']).where.not(image_url: nil).where.not(caption: nil) }
 
   has_many :slides, class_name: 'FacebookSlide', dependent: :destroy, inverse_of: :post
 
