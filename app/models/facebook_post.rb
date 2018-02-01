@@ -62,6 +62,9 @@ class FacebookPost < ActiveRecord::Base
         i.slides = i.slides & currentslides
         i.slides << currentslides - i.slides
         i.mediatype = "album"
+      elsif r['attachments'] && r['attachments']['data'][0] && attmedia = r['attachments']['data'][0]['media']
+        i.image_width = attmedia['image']['width']
+        i.image_height = attmedia['image']['height']
       end
 
       if r['type'] == 'video'
