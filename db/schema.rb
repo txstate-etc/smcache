@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129163735) do
+ActiveRecord::Schema.define(version: 20180321021812) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -52,14 +52,14 @@ ActiveRecord::Schema.define(version: 20180129163735) do
   add_index "facebook_posts", ["posttime"], name: "index_facebook_posts_on_posttime", using: :btree
 
   create_table "facebook_slides", force: :cascade do |t|
-    t.integer "facebook_post_id", limit: 4,   default: 0,  null: false
-    t.string  "url",              limit: 255, default: "", null: false
-    t.string  "mediatype",        limit: 255, default: "", null: false
-    t.integer "width",            limit: 4,   default: 0,  null: false
-    t.integer "height",           limit: 4,   default: 0,  null: false
+    t.integer "facebook_post_id", limit: 4,     default: 0,  null: false
+    t.text    "url",              limit: 65535
+    t.string  "mediatype",        limit: 255,   default: "", null: false
+    t.integer "width",            limit: 4,     default: 0,  null: false
+    t.integer "height",           limit: 4,     default: 0,  null: false
   end
 
-  add_index "facebook_slides", ["facebook_post_id", "url"], name: "index_facebook_slides_on_facebook_post_id_and_url", unique: true, using: :btree
+  add_index "facebook_slides", ["facebook_post_id", "url"], name: "index_facebook_slides_on_facebook_post_id_and_url", length: {"facebook_post_id"=>nil, "url"=>200}, using: :btree
 
   create_table "instagram_posts", force: :cascade do |t|
     t.string   "postid",       limit: 255,   null: false
@@ -83,15 +83,15 @@ ActiveRecord::Schema.define(version: 20180129163735) do
   add_index "instagram_posts", ["posttime"], name: "index_instagram_posts_on_posttime", using: :btree
 
   create_table "instagram_slides", force: :cascade do |t|
-    t.integer "instagram_post_id", limit: 4,   default: 0,  null: false
-    t.string  "url",               limit: 255, default: "", null: false
-    t.string  "mediatype",         limit: 255, default: "", null: false
-    t.integer "width",             limit: 4,   default: 0,  null: false
-    t.integer "height",            limit: 4,   default: 0,  null: false
-    t.string  "video_url",         limit: 255, default: "", null: false
+    t.integer "instagram_post_id", limit: 4,     default: 0,  null: false
+    t.text    "url",               limit: 65535
+    t.string  "mediatype",         limit: 255,   default: "", null: false
+    t.integer "width",             limit: 4,     default: 0,  null: false
+    t.integer "height",            limit: 4,     default: 0,  null: false
+    t.text    "video_url",         limit: 65535
   end
 
-  add_index "instagram_slides", ["url"], name: "index_instagram_slides_on_url", unique: true, using: :btree
+  add_index "instagram_slides", ["url"], name: "index_instagram_slides_on_url", length: {"url"=>200}, using: :btree
 
   create_table "tweets", force: :cascade do |t|
     t.string   "tweetid",       limit: 255
