@@ -71,8 +71,13 @@ class FacebookPost < ActiveRecord::Base
         i.video_url = r['source']
         if i.video_embed_html.blank?
           video_id = r['attachments']['data'][0]['target']['id']
-          caption_result = client.get_object(video_id, { fields: ['embed_html'] })
-          i.video_embed_html = caption_result['embed_html']
+          if video_id.blank?
+            video_url = r['attachments']['data'][0]['target']['url']
+            i.video_embed_html = '<div style="padding-top: 56.25%"><iframe style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" src="'+r['source']+'"></iframe></div>'
+          else
+            caption_result = client.get_object(video_id, { fields: ['embed_html'] })
+            i.video_embed_html = caption_result['embed_html']
+          end
         end
         # i.video_width = r.videos.standard_resolution.width
         # i.video_height = r.videos.standard_resolution.height
