@@ -10,17 +10,13 @@ class InstagramPost < ActiveRecord::Base
     @caption_utf8 ||= read_attribute(:caption).dup.force_encoding(Encoding::UTF_8) rescue ''
   end
 
-  # User ID for txst instagram account
-  # Use https://instagram.com/developer/endpoints/users/#get_users_search endpoint to find userids from usernames.
-  TXST_ID = '146165265'
-
   # Max number of results to return
   COUNT = 20
 
   def self.fetch!
     logger.debug("Fetching last #{COUNT} Instagram posts")
 
-    results = client.user_recent_media TXST_ID, count: COUNT
+    results = client.user_recent_media nil, count: COUNT
 
     logger.debug("Instagram returned #{results.try(:length)} results")
 
