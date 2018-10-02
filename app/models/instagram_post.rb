@@ -39,14 +39,16 @@ class InstagramPost < ActiveRecord::Base
       if !r.carousel_media.blank?
         currentslides = []
         r.carousel_media.each do |media|
-          s = InstagramSlide.find_or_initialize_by(url: media.images.standard_resolution.url)
-          s.width = media.images.standard_resolution.width
-          s.height = media.images.standard_resolution.height
-          s.mediatype = media.type
-          if media.videos
-            s.video_url = media.videos.standard_resolution.url
+          if media.images
+            s = InstagramSlide.find_or_initialize_by(url: media.images.standard_resolution.url)
+            s.width = media.images.standard_resolution.width
+            s.height = media.images.standard_resolution.height
+            if media.videos
+              s.video_url = media.videos.standard_resolution.url
+            end
+            s.mediatype = media.type
+            currentslides.push(s)
           end
-          currentslides.push(s)
         end
         i.slides = i.slides & currentslides
         i.slides << currentslides - i.slides
